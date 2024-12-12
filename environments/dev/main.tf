@@ -35,7 +35,7 @@ resource "google_cloud_run_service" "node_app" {
   template {
     spec {
       containers {
-        image = "REGION-docker.pkg.dev/${var.project}/docker-repo/node-app:latest"
+        image = "us-central1-docker.pkg.dev/${var.project}/docker-repo/node-app:latest"
       }
     }
   }
