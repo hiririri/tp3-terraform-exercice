@@ -16,10 +16,6 @@ locals {
   env = "dev"
 }
 
-provider "google" {
-  project = "${var.project}"
-}
-
 module "vpc" {
   source  = "../../modules/vpc"
   project = "${var.project}"
@@ -38,10 +34,10 @@ module "firewall" {
   subnet  = "${module.vpc.subnet}"
 }
 
-resource "google_artifact_registry_repository" "default" {
-  project = "${var.project}"
-  repository_id = "my-repository"
+resource "google_artifact_registry_repository" "my_repository" {
+  provider = google-beta
   location      = "us-central1"
+  repository_id = "my-repository"
   format        = "DOCKER"
 }
 
@@ -55,7 +51,7 @@ resource "google_cloud_run_service" "default" {
         ports {
           container_port = 80
         }
-        image = "us-central1-docker.pkg.dev/${var.project}/my-repository/node-app:latest"
+        image = "us-central1-docker.pkg.dev/${var.project}/my-repository/node-app:dev"
       }
     }
   }
