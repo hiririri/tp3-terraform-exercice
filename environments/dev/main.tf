@@ -27,21 +27,14 @@ resource "google_artifact_registry_repository" "my-repository" {
 }
 
 # Cloud Run Deployment
-resource "google_cloud_run_service" "node_app" {
+resource "google_cloud_run_v2_service" "node_app" {
   name     = "node-app"
   location = "us-central1"
 
   template {
-    spec {
-      containers {
-        image = "us-central1-docker.pkg.dev/${var.project}/docker-repo/node-app:latest"
-      }
+    containers {
+      image = "us-central1-docker.pkg.dev/${var.project}/docker-repo/node-app:latest"
     }
-  }
-
-  traffic {
-    percent         = 100
-    latest_revision = true
   }
 }
 
