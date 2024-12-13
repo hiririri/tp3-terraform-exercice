@@ -44,6 +44,12 @@ resource "google_artifact_registry_repository" "default" {
   format        = "DOCKER"
 }
 
+data "google_artifact_registry_docker_image" "my_image" {
+  location      = "us-central1"
+  repository_id = "my-repository"
+  image_name    = "my-repository:latest"
+}
+
 resource "google_cloud_run_service" "default" {
   name     = "my-repository"
   location = "us-central1"
