@@ -20,24 +20,6 @@ provider "google" {
   project = "${var.project}"
 }
 
-resource "google_artifact_registry_repository" "my-repository" {
-  repository_id = "my-repository"
-  location      = "us-central1"
-  format        = "DOCKER"
-}
-
-# # Cloud Run Deployment
-# resource "google_cloud_run_v2_service" "node_app" {
-#   name     = "node-app"
-#   location = "us-central1"
-
-#   template {
-#     containers {
-#       image = "us-central1-docker.pkg.dev/${var.project}/docker-repo/node-app:latest"
-#     }
-#   }
-# }
-
 module "vpc" {
   source  = "../../modules/vpc"
   project = "${var.project}"
@@ -54,4 +36,21 @@ module "firewall" {
   source  = "../../modules/firewall"
   project = "${var.project}"
   subnet  = "${module.vpc.subnet}"
+}
+
+resource "google_artifact_registry_repository" "my-repository" {
+  repository_id = "my-repository"
+  location      = "us-central1"
+  format        = "DOCKER"
+}
+
+resource "google_cloud_run_v2_service" "node_app" {
+  name     = "node-app"
+  location = "us-central1"
+
+  template {
+    containers {
+      image = "us-central1-docker.pkg.dev/${var.project}/docker-repo/node-app:latest"
+    }
+  }
 }
