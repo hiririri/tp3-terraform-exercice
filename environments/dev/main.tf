@@ -38,19 +38,19 @@ module "firewall" {
   subnet  = "${module.vpc.subnet}"
 }
 
-resource "google_artifact_registry_repository" "default" {
-  repository_id = "my-repository"
-  location      = "us-central1"
-  format        = "DOCKER"
-}
+# resource "google_artifact_registry_repository" "default" {
+#   repository_id = "my-repository"
+#   location      = "us-central1"
+#   format        = "DOCKER"
+# }
 
-resource "google_cloud_run_v2_service" "default" {
-  name     = "node-app"
-  location = "us-central1"
+# resource "google_cloud_run_v2_service" "default" {
+#   name     = "node-app"
+#   location = "us-central1"
 
-  template {
-    containers {
-      image = "us-central1-docker.pkg.dev/${var.project}/my-repository/node-app:latest"
-    }
-  }
-}
+#   template {
+#     containers {
+#       image = "us-central1-docker.pkg.dev/${var.project}/my-repository/node-app:latest"
+#     }
+#   }
+# }
