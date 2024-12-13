@@ -38,11 +38,11 @@ module "firewall" {
   subnet  = "${module.vpc.subnet}"
 }
 
-# resource "google_artifact_registry_repository" "default" {
-#   repository_id = "my-repository"
-#   location      = "us-central1"
-#   format        = "DOCKER"
-# }
+resource "google_artifact_registry_repository" "default" {
+  repository_id = "my-repository"
+  location      = "us-central1"
+  format        = "DOCKER"
+}
 
 resource "google_cloud_run_service" "default" {
   name     = "my-repository"
