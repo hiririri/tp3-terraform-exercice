@@ -29,11 +29,11 @@ steps:
     - 'push'
     - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
 
-- id: 'docker run'
-  name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'run'
-    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
+# - id: 'docker run'
+#   name: 'gcr.io/cloud-builders/docker'
+#   args:
+#     - 'run'
+#     - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
 
   name: 'alpine'
   entrypoint: 'sh'  
