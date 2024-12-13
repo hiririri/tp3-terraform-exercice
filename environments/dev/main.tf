@@ -36,6 +36,7 @@ module "firewall" {
 
 resource "google_artifact_registry_repository" "my_repository" {
   provider = google-beta
+  project = "${var.project}"
   location      = "us-central1"
   repository_id = "my-repository"
   format        = "DOCKER"
