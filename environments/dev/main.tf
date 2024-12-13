@@ -44,6 +44,7 @@ resource "google_artifact_registry_repository" "my_repository" {
 resource "google_cloud_run_service" "default" {
   name     = "my-repository"
   location = "us-central1"
+  project = "${var.project}"
 
   template {
     spec {
