@@ -50,7 +50,7 @@ resource "google_cloud_run_v2_service" "default" {
 
   template {
     containers {
-      image = "us-central1-docker.pkg.dev/${var.project}/docker-repo/node-app:latest"
+      image = "us-central1-docker.pkg.dev/${var.project}/my-repository/node-app:latest"
     }
   }
 }

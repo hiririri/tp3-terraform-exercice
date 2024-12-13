@@ -15,7 +15,6 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
-# 4. Build Docker image
 - id: 'docker build'
   name: 'gcr.io/cloud-builders/docker'
   args:
@@ -24,29 +23,18 @@ steps:
     - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
     - '.'
 
-# 5. Push Docker image to Artifact Registry
 - id: 'docker push'
   name: 'gcr.io/cloud-builders/docker'
   args:
     - 'push'
     - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
 
-# 6. Deploy to Cloud Run
-- id: 'deploy to cloud run'
-  name: 'gcr.io/cloud-builders/gcloud'
+- id: 'docker run'
+  name: 'gcr.io/cloud-builders/docker'
   args:
     - 'run'
-    - 'deploy'
-    - 'node-app'
-    - '--image'
     - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
-    - '--region'
-    - 'us-central1'
-    - '--platform'
-    - 'managed'
-    - '--allow-unauthenticated'
 
-- id: 'branch name'
   name: 'alpine'
   entrypoint: 'sh'  
   args: 
