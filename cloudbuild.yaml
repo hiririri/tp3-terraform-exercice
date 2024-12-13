@@ -99,7 +99,7 @@ steps:
   args:
     - 'build'
     - '-t'
-    - 'REGION-docker.pkg.dev/$PROJECT_ID/docker-repo/node-app:$BRANCH_NAME'
+    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
     - '.'
 
 # 5. Push Docker image to Artifact Registry
@@ -107,7 +107,7 @@ steps:
   name: 'gcr.io/cloud-builders/docker'
   args:
     - 'push'
-    - 'REGION-docker.pkg.dev/$PROJECT_ID/docker-repo/node-app:$BRANCH_NAME'
+    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
 
 # 6. Deploy to Cloud Run
 - id: 'deploy to cloud run'
@@ -117,7 +117,7 @@ steps:
     - 'deploy'
     - 'node-app'
     - '--image'
-    - 'REGION-docker.pkg.dev/$PROJECT_ID/docker-repo/node-app:$BRANCH_NAME'
+    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
     - '--region'
     - 'us-central1'
     - '--platform'

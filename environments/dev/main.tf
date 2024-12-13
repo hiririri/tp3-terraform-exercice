@@ -20,8 +20,8 @@ provider "google" {
   project = "${var.project}"
 }
 
-resource "google_artifact_registry_repository" "docker_repo" {
-  repository_id = "docker-repo"
+resource "google_artifact_registry_repository" "my-repository" {
+  repository_id = "my-repository"
   location      = "us-central1"
   format        = "DOCKER"
 }
