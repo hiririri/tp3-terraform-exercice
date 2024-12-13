@@ -15,6 +15,37 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
+# 4. Build Docker image
+- id: 'docker build'
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'build'
+    - '-t'
+    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
+    - '.'
+
+# 5. Push Docker image to Artifact Registry
+- id: 'docker push'
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'push'
+    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
+
+# 6. Deploy to Cloud Run
+- id: 'deploy to cloud run'
+  name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    - 'run'
+    - 'deploy'
+    - 'node-app'
+    - '--image'
+    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
+    - '--region'
+    - 'us-central1'
+    - '--platform'
+    - 'managed'
+    - '--allow-unauthenticated'
+
 - id: 'branch name'
   name: 'alpine'
   entrypoint: 'sh'  
@@ -91,35 +122,3 @@ steps:
         echo "*******************************************************************************"
       fi
 # [END tf-apply]      
-
-
-# 4. Build Docker image
-- id: 'docker build'
-  name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'build'
-    - '-t'
-    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
-    - '.'
-
-# 5. Push Docker image to Artifact Registry
-- id: 'docker push'
-  name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'push'
-    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
-
-# 6. Deploy to Cloud Run
-- id: 'deploy to cloud run'
-  name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    - 'run'
-    - 'deploy'
-    - 'node-app'
-    - '--image'
-    - 'REGION-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
-    - '--region'
-    - 'us-central1'
-    - '--platform'
-    - 'managed'
-    - '--allow-unauthenticated'
