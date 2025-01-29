@@ -31,4 +31,6 @@ variable "branch_name" {
   default     = "dev"
 }
 
-variable "commit_sha" {}
+variable "commit_sha" {
+    type = string
+}
