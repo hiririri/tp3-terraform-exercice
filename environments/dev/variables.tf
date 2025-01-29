@@ -32,5 +32,5 @@ variable "branch_name" {
 }
 
 variable "commit_sha" {
-    type = string
+    default     = "latest"
 }
