@@ -31,6 +31,4 @@ variable "branch_name" {
   default     = "dev"
 }
 
-variable "commit_sha" {
-  default     = "latest"
-}
+variable "commit_sha" {}
