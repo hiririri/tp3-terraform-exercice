@@ -100,6 +100,10 @@ steps:
         echo "Branch '$BRANCH_NAME' does not represent an official environment."
         echo "*******************************************************************************"
       fi
+
+images:
+  - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPO_NAME}/node-app:${_BRANCH_NAME}'
+
 # [END tf-apply]      
 
 substitutions:
