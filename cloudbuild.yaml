@@ -91,7 +91,6 @@ steps:
         cd environments/$BRANCH_NAME      
         terraform apply \
           -auto-approve \
-          -var "project_id=${PROJECT_ID}" \
           -var "region=${_REGION}" \
           -var "service_name=${_SERVICE_NAME}" \
           -var "artifact_repo_name=${_ARTIFACT_REPO_NAME}" \
