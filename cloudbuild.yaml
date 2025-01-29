@@ -66,6 +66,20 @@ steps:
       fi 
 # [END tf-plan]
 
+- id: 'docker build'
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'build'
+    - '-t'
+    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
+    - '.'
+
+- id: 'docker push'
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'push'
+    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
+
 # [START tf-apply]
 - id: 'tf apply'
   name: 'hashicorp/terraform:1.5.7'
@@ -82,17 +96,3 @@ steps:
         echo "*******************************************************************************"
       fi
 # [END tf-apply]      
-
-- id: 'docker build'
-  name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'build'
-    - '-t'
-    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
-    - '.'
-
-- id: 'docker push'
-  name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'push'
-    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
