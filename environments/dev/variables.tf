@@ -14,3 +14,19 @@
 
 
 variable "project" {}
+
+variable "region" {
+  default = "us-central1"
+}
+
+variable "service_name" {
+  default     = "demo-cloud-run"
+}
+
+variable "artifact_repo_name" {
+  default     = "my-repository"
+}
+
+variable "branch_name" {
+  default     = "dev"
+}

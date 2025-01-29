@@ -37,14 +37,14 @@ module "firewall" {
 resource "google_artifact_registry_repository" "my_repository" {
   provider = google-beta
   project = "${var.project}"
-  location      = "us-central1"
-  repository_id = "my-repository"
+  location      = "${var.region}"
+  repository_id = "${var.artifact_repo_name}"
   format        = "DOCKER"
 }
 
 resource "google_cloud_run_service" "node_app" {
-  name     = "my-repository"
-  location = "us-central1"
+  name     = "${var.service_name}"
+  location = "${var.region}"
   project = "${var.project}"
 
   template {
@@ -53,7 +53,7 @@ resource "google_cloud_run_service" "node_app" {
         ports {
           container_port = 80
         }
-        image = "us-central1-docker.pkg.dev/${var.project}/my-repository/node-app:dev"
+        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repo_name}/node-app:${var.branch_name}"
       }
     }
   }

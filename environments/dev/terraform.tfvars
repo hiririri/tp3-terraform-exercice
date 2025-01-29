@@ -1,1 +1,5 @@
 project="oauth2-413117"
+region="us-central1"
+service_name="demo-cloud-run"
+artifact_repo_name="my-repository"
+branch_name="dev"

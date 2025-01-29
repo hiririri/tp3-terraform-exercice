@@ -89,10 +89,23 @@ steps:
   - | 
       if [ -d "environments/$BRANCH_NAME/" ]; then
         cd environments/$BRANCH_NAME      
-        terraform apply -auto-approve
+        terraform apply \
+          -auto-approve \
+          -var "project_id=${PROJECT_ID}" \
+          -var "region=${_REGION}" \
+          -var "service_name=${_SERVICE_NAME}" \
+          -var "artifact_repo_name=${_ARTIFACT_REPO_NAME}" \
+          -var "branch_name=${_BRANCH_NAME}"
       else
         echo "***************************** SKIPPING APPLYING *******************************"
         echo "Branch '$BRANCH_NAME' does not represent an official environment."
         echo "*******************************************************************************"
       fi
 # [END tf-apply]      
+
+substitutions:
+  _LOCATION: 'europe-west1'
+  _REGION: 'europe-west1'
+  _ARTIFACT_REPO_NAME: 'my-repository'
+  _SERVICE_NAME: 'demo-cloud-run'
+  _BRANCH_NAME: 'v1'
