@@ -104,8 +104,8 @@ steps:
 # [END tf-apply]      
 
 substitutions:
-  _LOCATION: 'europe-west1'
-  _REGION: 'europe-west1'
+  _LOCATION: 'us-central1'
+  _REGION: 'us-central1'
   _ARTIFACT_REPO_NAME: 'my-repository'
   _SERVICE_NAME: 'demo-cloud-run'
-  _BRANCH_NAME: 'v1'
+  _BRANCH_NAME: 'dev'
