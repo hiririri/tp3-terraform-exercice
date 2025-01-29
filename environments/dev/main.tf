@@ -42,7 +42,7 @@ resource "google_artifact_registry_repository" "my_repository" {
   format        = "DOCKER"
 }
 
-resource "google_cloud_run_service" "default" {
+resource "google_cloud_run_service" "node_app" {
   name     = "my-repository"
   location = "us-central1"
   project = "${var.project}"
