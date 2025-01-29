@@ -16,6 +16,20 @@ options:
 
 steps:
 
+- id: 'docker build'
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'build'
+    - '-t'
+    - '${_REGION}-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME-$SHORT_SHA'
+    - '.'
+
+- id: 'docker push'
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'push'
+    - '${_REGION}-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME-$SHORT_SHA'
+
 - id: 'tf init'
   name: 'hashicorp/terraform:1.5.7'
   entrypoint: 'sh'
@@ -66,20 +80,6 @@ steps:
       fi 
 # [END tf-plan]
 
-- id: 'docker build'
-  name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'build'
-    - '-t'
-    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
-    - '.'
-
-- id: 'docker push'
-  name: 'gcr.io/cloud-builders/docker'
-  args:
-    - 'push'
-    - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-repository/node-app:$BRANCH_NAME'
-
 # [START tf-apply]
 - id: 'tf apply'
   name: 'hashicorp/terraform:1.5.7'
@@ -94,15 +94,13 @@ steps:
           -var "region=${_REGION}" \
           -var "service_name=${_SERVICE_NAME}" \
           -var "artifact_repo_name=${_ARTIFACT_REPO_NAME}" \
-          -var "branch_name=${_BRANCH_NAME}"
+          -var "branch_name=${BRANCH_NAME}"
+          -var="commit_sha=${SHORT_SHA}"
       else
         echo "***************************** SKIPPING APPLYING *******************************"
         echo "Branch '$BRANCH_NAME' does not represent an official environment."
         echo "*******************************************************************************"
       fi
-
-images:
-  - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_ARTIFACT_REPO_NAME}/node-app:${_BRANCH_NAME}'
 
 # [END tf-apply]      
 
@@ -111,4 +109,3 @@ substitutions:
   _REGION: 'us-central1'
   _ARTIFACT_REPO_NAME: 'my-repository'
   _SERVICE_NAME: 'demo-cloud-run'
-  _BRANCH_NAME: 'dev'

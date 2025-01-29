@@ -30,3 +30,7 @@ variable "artifact_repo_name" {
 variable "branch_name" {
   default     = "dev"
 }
+
+variable "commit_sha" {
+  default     = "latest"
+}

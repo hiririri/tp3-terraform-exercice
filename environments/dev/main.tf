@@ -53,7 +53,7 @@ resource "google_cloud_run_service" "node_app" {
         ports {
           container_port = 80
         }
-        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repo_name}/node-app:${var.branch_name}"
+        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repo_name}/node-app:${var.branch_name}-${var.commit_sha}"
       }
     }
   }
